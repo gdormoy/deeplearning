@@ -46,6 +46,7 @@ def test_data_with_label():
     shuffle(test_images)
     return test_images
 
+
 if __name__ == "__main__":
     training_images = train_data_with_label()
     testing_images = test_data_with_label()
@@ -75,7 +76,10 @@ if __name__ == "__main__":
 
     model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accuracy'])
     model.fit(x=tr_img_data,y=tr_lbl_data,epochs=50,batch_size=100, callbacks=[tb_callback])
-    model.save('./models/project')
-    model.evaluate(x=tst_img_data,y=tst_lbl_data,batch_size=50, callbacks=[tb_callback])
-
-    model.summary()
+    scores = model.evaluate(x=tst_img_data,y=tst_lbl_data,batch_size=50, callbacks=[tb_callback])
+    model.save('./models/project.h5')
+    json_string = model.to_json()
+    with open("./models/project.json", "w") as json_file:
+        json_file.write(json_string)
+    model.save_weights("./models/project_weights.h5")
+    print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
