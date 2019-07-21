@@ -57,14 +57,14 @@ if __name__ == "__main__":
 
     model = Sequential()
     tb_callback = TensorBoard('./logs/project')
-    model.add(InputLayer(input_shape=[128,128,3]))
-    model.add(Conv2D(filters=32,kernel_size=5,strides=1,padding='same', activation='relu'))
+    # model.add(InputLayer(input_shape=[128,128,3]))
+    model.add(Conv2D(filters=32,kernel_size=5,strides=1,padding='same', activation='relu', input_shape=[128,128,3]))
     model.add(MaxPool2D(pool_size=5,padding='same'))
 
-    model.add(Conv2D(filters=50, kernel_size=5,strides=1, padding='same', activation='relu'))
+    model.add(Conv2D(filters=50, kernel_size=5,strides=1, padding='same', activation='relu', input_shape=[128,128,3]))
     model.add(MaxPool2D(pool_size=5, padding='same'))
 
-    model.add(Conv2D(filters=80, kernel_size=5,strides=1, padding='same', activation='relu'))
+    model.add(Conv2D(filters=80, kernel_size=5,strides=1, padding='same', activation='relu', input_shape=[128,128,3]))
     model.add(MaxPool2D(pool_size=5, padding='same'))
 
     model.add(Dropout(0.25))
@@ -75,11 +75,12 @@ if __name__ == "__main__":
     optimizer = Adam(lr=1e-3)
 
     model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accuracy'])
-    model.fit(x=tr_img_data,y=tr_lbl_data,epochs=50,batch_size=100, callbacks=[tb_callback])
+    model.fit(x=tr_img_data,y=tr_lbl_data,epochs=1,batch_size=100, callbacks=[tb_callback])
     scores = model.evaluate(x=tst_img_data,y=tst_lbl_data,batch_size=50, callbacks=[tb_callback])
+
+    print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+
     model.save('./models/project.h5')
     json_string = model.to_json()
     with open("./models/project.json", "w") as json_file:
         json_file.write(json_string)
-    model.save_weights("./models/project_weights.h5")
-    print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
