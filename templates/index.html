@@ -3,14 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Pepe the frog</title>
+    <script>
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('img1').src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    </script>
 </head>
 <body>
     <center>
-        <img src="{{url_for('static', filename='pepe.png')}}" width="200" height="200"/><br><br>
+        <img id="img1" src="{{url_for('static', filename='pepe.png')}}" height="128" width="128" /><br><br>
 
         <form action="evaluate" method="post" enctype="multipart/form-data">
             <label for="file">Select image :</label><br><br>
-            <input name="file" type="file" accept="image/*"/><br><br>
+            <input name="file" type="file" onchange="readURL(this);" accept="image/*"/><br><br>
             <input type="submit"/>
         </form>
     </center>
