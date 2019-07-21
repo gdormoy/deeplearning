@@ -63,10 +63,10 @@ if __name__ == "__main__":
     model.add(Conv2D(filters=32,kernel_size=5,strides=1,padding='same', activation='relu', input_shape=[128,128,3]))
     model.add(MaxPool2D(pool_size=5,padding='same'))
 
-    model.add(Conv2D(filters=50, kernel_size=5,strides=1, padding='same', activation='relu', input_shape=[128,128,3]))
+    model.add(Conv2D(filters=64, kernel_size=5,strides=1, padding='same', activation='relu', input_shape=[128,128,3]))
     model.add(MaxPool2D(pool_size=5, padding='same'))
 
-    model.add(Conv2D(filters=80, kernel_size=5,strides=1, padding='same', activation='relu', input_shape=[128,128,3]))
+    model.add(Conv2D(filters=128, kernel_size=5,strides=1, padding='same', activation='relu', input_shape=[128,128,3]))
     model.add(MaxPool2D(pool_size=5, padding='same'))
 
     model.add(Dropout(0.25))
