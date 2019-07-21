@@ -10,8 +10,7 @@ def load_existing_model(model_filename):
     return model
 
 if __name__ == "__main__":
-    model_filename = input('path to the saved model!\n')
-    model = load_existing_model(model_filename)
+    model = load_existing_model('./models/project.h5')
     model.summary()
     file = input('path to the image!\n')
     img = cv2.imread(file)
